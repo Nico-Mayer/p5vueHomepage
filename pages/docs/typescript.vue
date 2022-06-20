@@ -3,6 +3,10 @@
 <template>
   <main flex="~" relative="~" top="0" h="full" p="t20">
     <Sidebar :title="'Docs'" />
-    Typescript side
+    <div p="l10">
+      <article class="prose prose-textl dark:prose-textd">
+        <ContentDoc path="/typescript" />
+      </article>
+    </div>
   </main>
 </template>

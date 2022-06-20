@@ -3,6 +3,10 @@
 <template>
   <main flex="~" relative="~" top="0" h="full" p="t20">
     <Sidebar :title="'Docs'" />
-    Nuxt 3 Side
+    <div p="l10">
+      <article class="prose prose-textl dark:prose-textd">
+        <ContentDoc path="/nuxt3" />
+      </article>
+    </div>
   </main>
 </template>
