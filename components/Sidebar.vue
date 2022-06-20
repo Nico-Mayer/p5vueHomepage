@@ -59,7 +59,7 @@ const menuItems = title === "Docs" ? docsMenuItems : examplesMenuItems
 </template>
 
 <style scoped>
-.router-link-active {
+.router-link-exact-active {
   border: 1px solid #41b883 !important;
   pointer-events: none !important;
 }

@@ -13,12 +13,12 @@
     class="fixed"
     z="10"
   >
-    <div>
+    <a href="/">
       <div flex="~" items="center" space="x4" opacity="75">
         <img src="/logo.svg" alt="" w="6" />
         <h1 font="mono semibold" tracking="widest">p5vue</h1>
       </div>
-    </div>
+    </a>
     <div space="x2" flex="~">
       <NuxtLink class="btn" to="/">
         <div class="i-carbon-home text-lg"></div>
