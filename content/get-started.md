@@ -6,10 +6,8 @@
 npm i p5vue
 ```
 
-<p>
-Depending on your environment, you may be alerted upon installing <code>p5vue</code> that <code>p5</code> is a required peer dependency which you must install yourself.
+Depending on your environment, you may be alerted upon installing `p5vue` that `p5` is a required peer dependency which you must install yourself.
 If this is the case:
-</p>
 
 ```bash
 npm i -D p5
@@ -29,7 +27,7 @@ Now add `p5vue` to your project:
   createApp(App).use(p5vue).mount("#app")
   ```
 
-- Use the <code>P5</code> component inside the app
+- Use the `P5` component inside the app
 
   ```javascript
   <script setup>
