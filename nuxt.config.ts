@@ -5,4 +5,9 @@ export default defineNuxtConfig({
   modules: ["@unocss/nuxt", "@nuxt/content"],
   unocss: {},
   css: ["@unocss/reset/tailwind.css", "/app.css"],
+  content: {
+    highlight: {
+      theme: "github-dark",
+    },
+  },
 })
