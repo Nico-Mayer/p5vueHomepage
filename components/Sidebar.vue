@@ -39,7 +39,7 @@ const menuItems = title === "Docs" ? docsMenuItems : examplesMenuItems
 </script>
 
 <template>
-  <nav w="58" border="r black/15 dark:white/10">
+  <nav min-w="58" border="r black/15 dark:white/10">
     <div border="b black/15 dark:white/10" p="2">
       <div border="~ black/15 dark:white/10 rounded" text="center" p="y3">
         <span>{{ title === "Docs" ? "📘" : "🧪" }}</span>
