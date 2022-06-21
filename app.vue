@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-  title: "Vide",
+  title: "p5vue",
   link: [
     {
       rel: "icon",

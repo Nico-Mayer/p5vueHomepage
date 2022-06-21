@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   css: ["@unocss/reset/tailwind.css", "/app.css"],
   content: {
     highlight: {
-      theme: "github-dark",
+      theme: "monokai",
     },
   },
 })

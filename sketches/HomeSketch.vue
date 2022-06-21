@@ -2,143 +2,137 @@
 import p5 from "p5"
 const canvasWidth = 1200
 const canvasHeight = 800
-
-let aliveColor = "#41B883"
-let gridColor = "#374151"
-
-function themeToggle() {
-  toggleDarkMode()
-  const darkTheme = isDark()
-  if (darkTheme) {
-    gridColor = "#3c423e"
-  } else {
-    gridColor = "#374151"
-  }
-}
+let darkMode
+let ballColor
 
 onMounted(() => {
   if (isDark()) {
-    gridColor = "#3c423e"
+    darkMode = true
+    ballColor = "#E0EDEE"
   } else {
-    gridColor = "#374151"
+    darkMode = false
+    ballColor = "#374151"
   }
+  console.log(darkMode)
 })
 
-// P5 Sketch
+function changeTheme() {
+  toggleDarkMode()
+  if (ballColor === "#374151") {
+    ballColor = "#E0EDEE"
+  } else {
+    ballColor = "#374151"
+  }
+}
+
 const sketch = (p5: p5) => {
-  // Variables
-  let resolution = 25
-  let grid
-  let cols = canvasWidth / resolution
-  let rows = canvasHeight / resolution
-
-  // Functions
-  function make2DArray(cols, rows) {
-    return new Array(cols).fill(null).map(() => new Array(rows).fill(0))
-  }
-
-  function renderGrid(grid) {
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        let x = i * resolution
-        let y = j * resolution
-        if (grid[i][j] == 1) {
-          drawAliveCell(x, y)
-        }
-      }
-    }
-  }
-  function drawAliveCell(x, y) {
-    p5.push()
-    p5.noStroke()
-    p5.fill(aliveColor)
-    p5.rect(x, y, resolution, resolution)
-    p5.pop()
-  }
-
-  function countNeighbors(grid, x, y) {
-    let sum = 0
-    for (let i = -1; i < 2; i++) {
-      for (let j = -1; j < 2; j++) {
-        let col = (x + i + cols) % cols
-        let row = (y + j + rows) % rows
-        sum += grid[col][row]
-      }
-    }
-    sum -= grid[x][y]
-    return sum
-  }
-  function drawGridLines() {
-    for (let i = 0; i <= rows; i++) {
-      p5.push()
-      p5.stroke(gridColor)
-      p5.line(
-        0,
-        (i / rows) * canvasHeight,
-        canvasWidth,
-        (i / rows) * canvasHeight
-      )
-      p5.pop()
-    }
-    for (let i = 0; i <= cols; i++) {
-      p5.push()
-      p5.stroke(gridColor)
-      p5.line(
-        (i / cols) * canvasWidth,
-        0,
-        (i / cols) * canvasWidth,
-        canvasWidth
-      )
-      p5.pop()
-    }
-  }
-
-  function nextGen(grid) {
-    const nextGen = grid.map((arr) => [...arr])
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        let cellState = grid[i][j]
-        let neighbors = countNeighbors(grid, i, j)
-
-        if (cellState == 0 && neighbors == 3) {
-          nextGen[i][j] = 1
-        } else if (cellState == 1 && (neighbors < 2 || neighbors > 3)) {
-          nextGen[i][j] = 0
-        } else {
-          nextGen[i][j] = grid[i][j]
-        }
-      }
-    }
-    return nextGen
-  }
+  let buffer
+  let r1 = 120
+  let r2 = 200
+  let m1 = 40
+  let m2 = 60
+  let a1 = p5.PI / 2
+  let a2 = p5.PI / 2
+  let a1_v = 0
+  let a2_v = 0
+  let g = 0.5
 
   p5.setup = () => {
     p5.createCanvas(canvasWidth, canvasHeight)
-    p5.frameRate(15)
-    grid = make2DArray(cols, rows)
-    for (let i = 0; i < cols; i++) {
-      for (let j = 0; j < rows; j++) {
-        grid[i][j] = p5.floor(p5.random(2))
-      }
-    }
+    buffer = p5.createGraphics(canvasWidth, canvasHeight)
+    //buffer.background(0)
+    buffer.translate(canvasWidth / 2, 250)
   }
 
   p5.draw = () => {
+    //p5.background(100)
     p5.clear(0, 0, 0, 0)
+    p5.imageMode(p5.CORNER)
+    p5.image(buffer, 0, 0, canvasWidth, canvasHeight)
+    p5.translate(canvasWidth / 2, 250)
 
-    renderGrid(grid)
-    drawGridLines()
-    grid = nextGen(grid)
+    p5.push()
+    let x1 = r1 * p5.sin(a1)
+    let y1 = r1 * p5.cos(a1)
+    p5.strokeWeight(4)
+    p5.stroke("#41B883")
+    p5.line(0, 0, x1, y1)
+    p5.noStroke()
+
+    p5.fill(ballColor)
+    p5.ellipse(x1, y1, m1, m1)
+
+    let x2 = x1 + r2 * p5.sin(a2)
+    let y2 = y1 + r2 * p5.cos(a2)
+    p5.strokeWeight(4)
+    p5.stroke("#41B883")
+    p5.line(x1, y1, x2, y2)
+    p5.noStroke()
+    p5.ellipse(x2, y2, m2, m2)
+    p5.pop()
+
+    let num1 =
+      -g * (2 * m1 + m2) * p5.sin(a1) -
+      m2 * g * p5.sin(a1 - 2 * a2) -
+      2 *
+        p5.sin(a1 - a2) *
+        m2 *
+        (a2_v * a2_v * r2 + a1_v * a1_v * r1 * p5.cos(a1 - a2))
+    let denom1 = r1 * (2 * m1 + m2 - m2 * p5.cos(2 * a1 - 2 * a2))
+    let a1_a = num1 / denom1
+
+    let num2 =
+      2 *
+      p5.sin(a1 - a2) *
+      (a1_v * a1_v * r1 * (m1 + m2) +
+        g * (m1 + m2) * p5.cos(a1) +
+        a2_v * a2_v * r2 * m2 * p5.cos(a1 - a2))
+    let denom2 = r2 * (2 * m1 + m2 - m2 * p5.cos(2 * a1 - 2 * a2))
+    let a2_a = num2 / denom2
+
+    a1_v += a1_a
+    a2_v += a2_a
+
+    a1 += a1_v
+    a2 += a2_v
+    a1_v *= 0.999
+    a2_v *= 0.999
+
+    let col = p5.color("#41B883")
+    col.setAlpha(100)
+    buffer.stroke(col)
+    buffer.strokeWeight(4)
+    buffer.point(x2, y2)
   }
 }
 </script>
 
 <template>
-  <div class="flex relative w-screen justify-center t-20">
-    <P5Wrapper class="pt-20" :sketch="sketch" />
+  <main w="screen" relative="~">
     <div
-      class="i-carbon-sun text-xl m-4 absolute right-0"
-      @click="toggleDarkMode()"
+      class="i-carbon-moon dark:i-carbon-sun"
+      absolute="~"
+      right="0"
+      m="10"
+      @click="changeTheme"
+      z="10"
     />
-  </div>
+    <div flex="~ col" w="full" absolute="~" items="center">
+      <div
+        flex="~"
+        justify="center"
+        items="center"
+        space="x4"
+        relative="~"
+        top="50"
+      >
+        <div class="i-simple-icons-p5dotjs" text="7xl" />
+        <div class="i-carbon-add" text="3xl" />
+        <div class="i-simple-icons-vuedotjs" text="5xl" />
+      </div>
+      <div flex="~">
+        <P5Wrapper :sketch="sketch" />
+      </div>
+    </div>
+  </main>
 </template>
