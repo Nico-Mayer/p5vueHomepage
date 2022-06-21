@@ -2,7 +2,7 @@
 
 ### Setup for Nuxt 3 with SSR
 
-##### To set the plugin up for Nuxt 3 we have to use some tricks to get it workin.
+##### To set the plugin up for Nuxt 3 we have to use some tricks to get it working.
 
 - Install p5vue
   ```fish
@@ -10,7 +10,7 @@
   ```
 - Add Plugin to nuxt
 
-  - Crate a plugins folder in your root directory `~/plugins`
+  - Create a plugins folder in your root directory `~/plugins`
   - add a `p5vue.client.ts` file in the plugins folder
   - Add the plugin to Nuxt like this:
 

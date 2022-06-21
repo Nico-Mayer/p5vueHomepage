@@ -14,7 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div h="screen" overflow="auto" font="mono">
+  <div h="screen" overflow="auto">
     <Navbar />
     <RouterView />
   </div>

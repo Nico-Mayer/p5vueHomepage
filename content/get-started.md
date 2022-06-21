@@ -29,7 +29,7 @@ Now add `p5vue` to your project:
 
 - Use the `P5` component inside the app
 
-  ```javascript
+  ```vue
   <script setup>
   import p5 from "p5"
 
@@ -45,6 +45,6 @@ Now add `p5vue` to your project:
   </script>
 
   <template>
-  	<P5 :sketch="sketch"/>
+    <P5 :sketch="sketch" />
   </template>
   ```

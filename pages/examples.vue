@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main flex="~" relative="~" top="0" h="full" p="t20">
+  <main flex="~" relative="~" top="0" h="full" p="y20">
     <Sidebar :title="'Examples'" />
     <NuxtPage />
   </main>
