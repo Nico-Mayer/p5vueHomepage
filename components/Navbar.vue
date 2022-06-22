@@ -8,7 +8,7 @@
     h="20"
     justify="between"
     p="8"
-    bg="darkbg"
+    bg="lightbg dark:darkbg"
     border="b black/15 dark:white/10"
     items="center"
     class="fixed"
