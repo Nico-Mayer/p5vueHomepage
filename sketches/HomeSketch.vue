@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import p5 from "p5"
-const canvasWidth = 1200
-const canvasHeight = 800
 let darkMode
 let ballColor
+// Sketch Variables
+const canvasWidth = 1200
+const canvasHeight = 800
+let g = 0.5
+let m1 = 30
+let m2 = 20
+let r1 = 200
+let r2 = 200
 
 onMounted(() => {
   if (isDark()) {
@@ -13,8 +19,9 @@ onMounted(() => {
     darkMode = false
     ballColor = "#374151"
   }
-  console.log(darkMode)
 })
+
+// Functions
 
 function changeTheme() {
   toggleDarkMode()
@@ -24,32 +31,42 @@ function changeTheme() {
     ballColor = "#374151"
   }
 }
+function changeGravity(e) {
+  console.log(g)
+  g = e.target.value
+}
+function changeMass(e) {
+  if (e.target.name === "m2Changer") {
+    m2 = e.target.value
+  }
+}
+
+// Sketch Area
 
 const sketch = (p5: p5) => {
   let buffer
-  let r1 = 120
-  let r2 = 200
-  let m1 = 40
-  let m2 = 60
-  let a1 = p5.PI / 2
-  let a2 = p5.PI / 2
+  let xOff = canvasWidth / 2
+  let yOff = 225
+  let a1 = p5.PI / p5.random(2)
+  let a2 = p5.PI / p5.random(2)
   let a1_v = 0
   let a2_v = 0
-  let g = 0.5
 
   p5.setup = () => {
     p5.createCanvas(canvasWidth, canvasHeight)
+    p5.pixelDensity(1)
     buffer = p5.createGraphics(canvasWidth, canvasHeight)
     //buffer.background(0)
-    buffer.translate(canvasWidth / 2, 250)
+    buffer.translate(xOff, yOff)
   }
 
   p5.draw = () => {
-    //p5.background(100)
     p5.clear(0, 0, 0, 0)
+    //p5.background(100)
+
     p5.imageMode(p5.CORNER)
     p5.image(buffer, 0, 0, canvasWidth, canvasHeight)
-    p5.translate(canvasWidth / 2, 250)
+    p5.translate(xOff, yOff)
 
     p5.push()
     let x1 = r1 * p5.sin(a1)
@@ -103,6 +120,15 @@ const sketch = (p5: p5) => {
     buffer.stroke(col)
     buffer.strokeWeight(4)
     buffer.point(x2, y2)
+    buffer.point(x1, y1)
+
+    p5.mousePressed = () => {
+      let d = p5.dist(xOff, yOff, p5.mouseX, p5.mouseY)
+      if (d < r1 + r2) {
+        a1 = p5.random(200)
+        a2 = p5.random(200)
+      }
+    }
   }
 }
 </script>
@@ -133,6 +159,69 @@ const sketch = (p5: p5) => {
       <div flex="~">
         <P5Wrapper :sketch="sketch" />
       </div>
+
+      <!-- Slider Section -->
+
+      <div flex="~" space="x4" color="accent" font="mono" m="t8">
+        <div flex="~ col" items="center" space="y2">
+          <input
+            type="range"
+            min="0.1"
+            max="1"
+            :value="g"
+            step="0.1"
+            @input="changeGravity"
+            class="w-full slider h-2 bg-textd rounded-lg appearance-none cursor-pointer dark:bg-textl"
+          />
+          <label>Gravity</label>
+        </div>
+        <div flex="~ col" items="center" space="y2">
+          <input
+            type="range"
+            min="2"
+            max="200"
+            step="2"
+            :value="m2"
+            name="m2Changer"
+            @input="changeMass"
+            class="w-full slider h-2 bg-textd rounded-lg appearance-none cursor-pointer dark:bg-textl"
+          />
+          <label>Mass</label>
+        </div>
+      </div>
     </div>
   </main>
 </template>
+
+<style scoped>
+.slider {
+  -webkit-appearance: none;
+  @apply w-80
+
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: #41b883;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #41b883;
+  cursor: pointer;
+}
+</style>
