@@ -41,6 +41,10 @@ export default defineConfig({
       "side-btn",
       "bg-accent/30 w-full rounded color-accent px-2 py-2 hover:(bg-accent/60 text-white/90) cursor-pointer flex items-center space-x-2",
     ],
+    [
+      "themeToggle-btn",
+      "absolute  right-0 mr-2 md:mr-8 mt-11 z-10 bg-lightbg dark:bg-darkbg p-2 rounded-full shadow-xl",
+    ],
   ],
   presets: [
     presetWebFonts(

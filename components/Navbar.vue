@@ -7,12 +7,12 @@
     min-w="sm"
     h="20"
     justify="between"
-    p="8"
+    p="2 md:8"
     bg="lightbg dark:darkbg"
     border="b black/15 dark:white/10"
     items="center"
     class="fixed"
-    z="10"
+    z="20"
   >
     <a href="/">
       <div flex="~" items="center" space="x4" opacity="75">

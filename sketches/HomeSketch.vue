@@ -3,8 +3,8 @@ import p5 from "p5"
 let darkMode
 let ballColor
 // Sketch Variables
-const canvasWidth = 1200
-const canvasHeight = 800
+let canvasWidth = 1200
+let canvasHeight = 800
 let g = 0.5
 let m1 = 30
 let m2 = 20
@@ -12,6 +12,19 @@ let r1 = 190
 let r2 = 220
 
 onMounted(() => {
+  console.log(screen.width)
+
+  if (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  ) {
+    // true for mobile device
+    console.log("on mobile")
+    canvasWidth = screen.width
+    canvasHeight = screen.height
+  }
+
   if (isDark()) {
     darkMode = true
     ballColor = "#E0EDEE"
@@ -124,7 +137,8 @@ const sketch = (p5: p5) => {
 
     p5.mousePressed = () => {
       let d = p5.dist(xOff, yOff, p5.mouseX, p5.mouseY)
-      if (d < r1 + r2) {
+      console.log(p5.mouseY)
+      if (d < r1 + r2 && p5.mouseY > 0) {
         a1 = p5.random(200)
         a2 = p5.random(200)
       }
@@ -135,14 +149,10 @@ const sketch = (p5: p5) => {
 
 <template>
   <main w="screen" relative="~">
-    <div
-      class="i-carbon-moon dark:i-carbon-sun"
-      absolute="~"
-      right="0"
-      m="10"
-      @click="changeTheme"
-      z="10"
-    />
+    <button class="themeToggle-btn" @click="changeTheme">
+      <div class="i-carbon-moon dark:i-carbon-sun icon-btn" />
+    </button>
+
     <div flex="~ col" w="full" absolute="~" items="center">
       <div
         flex="~"
@@ -162,7 +172,14 @@ const sketch = (p5: p5) => {
 
       <!-- Slider Section -->
 
-      <div flex="~" space="x4" color="accent" font="mono" m="t8">
+      <div
+        flex="md:~"
+        space="x4"
+        color="accent"
+        font="mono"
+        m="t8"
+        class="hidden"
+      >
         <div flex="~ col" items="center" space="y2">
           <input
             type="range"
