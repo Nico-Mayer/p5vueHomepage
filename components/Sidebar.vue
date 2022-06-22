@@ -24,7 +24,7 @@ const examplesMenuItems = [
     url: "/examples/",
   },
   {
-    title: "Example2",
+    title: "Sine Cosine in 3D",
     icon: "i-carbon-asset-digital-twin",
     url: "/examples/2",
   },

@@ -5,15 +5,11 @@ let width = 850
 let height = 400
 
 onMounted(() => {
-  console.log(screen.width)
-
   if (
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     )
   ) {
-    // true for mobile device
-    console.log("on mobile")
     width = screen.width * 0.9
   }
 
@@ -25,63 +21,62 @@ onMounted(() => {
 })
 
 const sketch = (p5: p5) => {
-  let x = 0.01
-  let y = 0
-  let z = 0
-
-  const sigma = 10
-  const b = 28
-  const c = 8.0 / 3.0
-
-  let lastPoint
-  let points = []
-
   p5.setup = () => {
     p5.createCanvas(width, height, p5.WEBGL)
-    p5.colorMode(p5.HSB)
-    lastPoint = p5.createVector(0, 0, 0)
+    p5.pixelDensity(1)
   }
   p5.draw = () => {
-    p5.background(215, 26, 18)
-    p5.orbitControl()
-    let dt = 0.01
-    let dx = sigma * (y - x) * dt
-    let dy = (x * (b - z) - y) * dt
-    let dz = (x * y - c * z) * dt
-    x = x + dx
-    y = y + dy
-    z = z + dz
+    //p5.clear(0, 0, 0, 0)
+    p5.background(250)
+    p5.rotateY(p5.frameCount * 0.01)
 
-    p5.translate(0, 0, -80)
-    points.push(p5.createVector(x, y, z))
-    p5.scale(4)
+    for (let j = 0; j < 5; j++) {
+      p5.push()
+      for (let i = 0; i < 80; i++) {
+        p5.translate(
+          p5.sin(p5.frameCount * 0.001 + j) * 100,
+          p5.sin(p5.frameCount * 0.001 + j) * 100,
+          i * 0.1
+        )
+        p5.rotateZ(p5.frameCount * 0.002)
+        p5.push()
 
-    //drawLine(x, y, z, lastPoint.x, lastPoint.y, lastPoint.z);
-
-    var len = points.length
-    var i = 0
-    let hue = 0
-    p5.beginShape()
-    p5.noFill()
-    p5.strokeWeight(4)
-    while (i < len) {
-      hue = hue + 0.1
-      p5.stroke(hue, 255, 255)
-      p5.vertex(points[i].x, points[i].y, points[i].z)
-      if (hue > 255) {
-        hue = 0
+        p5.sphere(8, 6, 4)
+        p5.pop()
       }
-      i++
+      p5.pop()
     }
-    p5.endShape()
   }
 }
 </script>
 
 <template>
   <main>
-    <div border="~ accent/30" rounded="~ lg" overflow="hidden">
+    <button class="themeToggle-btn" @click="toggleDarkMode()">
+      <div class="i-carbon-moon dark:i-carbon-sun icon-btn" />
+    </button>
+    <div m="b4" relative="~">
+      <div flex="~" space="x4" items="center" m="b-2">
+        <div class="i-carbon-asset-digital-twin" text="2xl" />
+        <h1 class="font-bold text-accent text-2xl">Sine Cosine in 3D</h1>
+      </div>
+
+      <p class="font-italic text-textl/50 dark:text-textd/50">
+        Adapted from the Official
+        <a
+          href="https://p5js.org/examples/3d-sine-cosine-in-3d.html"
+          class="text-accent/50 hover:text-accent"
+          >p5 examples</a
+        >.
+      </p>
+    </div>
+
+    <div border="~ 2 accent" rounded="~ lg" overflow="hidden">
       <P5Wrapper :sketch="sketch" />
     </div>
+    <h1 class="font-bold text-accent text-2xl my-8">Code</h1>
+    <article class="prose prose-textl dark:prose-textd max-w-none pb-10">
+      <ContentDoc path="sincoscode" />
+    </article>
   </main>
 </template>
