@@ -8,8 +8,8 @@ const canvasHeight = 800
 let g = 0.5
 let m1 = 30
 let m2 = 20
-let r1 = 200
-let r2 = 200
+let r1 = 190
+let r2 = 220
 
 onMounted(() => {
   if (isDark()) {
