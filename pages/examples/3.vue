@@ -41,10 +41,7 @@ const sketch = (p5: p5) => {
   <main>
     <div flex="~ col md:row" p="t20">
       <Sidebar title="Examples" />
-      <button
-        class="absolute top-80 right-4 z-10 md:themeToggle-btn"
-        @click="changeTheme"
-      >
+      <button class="themeToggle-btn-examples" @click="changeTheme">
         <div class="i-carbon-moon dark:i-carbon-sun icon-btn m0" />
       </button>
       <div p="2 md:10">
