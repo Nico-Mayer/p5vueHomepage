@@ -45,6 +45,10 @@ export default defineConfig({
       "themeToggle-btn",
       "absolute  right-0 mr-2 md:mr-8 mt-11 z-10 bg-lightbg dark:bg-darkbg p-2 rounded-full shadow-xl",
     ],
+    [
+      "themeToggle-btn-examples",
+      "absolute top-80 md:top-20 right-4  md:right-0 mr-2 md:mr-8 md:mt-11 z-10 bg-lightbg dark:bg-darkbg p-2 rounded-full shadow-xl",
+    ],
   ],
   presets: [
     presetWebFonts(
