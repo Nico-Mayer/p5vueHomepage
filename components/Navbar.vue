@@ -1,4 +1,33 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const homeBtn = ref<HTMLElement | null>(null)
+const docsBtn = ref<HTMLElement | null>(null)
+const examplesBtn = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  homeBtn.value.classList.add("isActive")
+})
+
+function setActive(dir) {
+  console.log(dir)
+  switch (dir) {
+    case "home":
+      homeBtn.value.classList.add("isActive")
+      docsBtn.value.classList.remove("isActive")
+      examplesBtn.value.classList.remove("isActive")
+      break
+    case "docs":
+      homeBtn.value.classList.remove("isActive")
+      docsBtn.value.classList.add("isActive")
+      examplesBtn.value.classList.remove("isActive")
+      break
+    case "examples":
+      homeBtn.value.classList.remove("isActive")
+      docsBtn.value.classList.remove("isActive")
+      examplesBtn.value.classList.add("isActive")
+      break
+  }
+}
+</script>
 
 <template>
   <nav
@@ -23,18 +52,30 @@
       </div>
     </a>
     <div space="x2" flex="~">
-      <NuxtLink class="btn hidden md:flex" to="/">
-        <div class="i-carbon-home text-lg"></div>
-        <span>Home</span>
-      </NuxtLink>
-      <NuxtLink class="btn" to="/docs">
-        <div class="i-simple-icons-docsdotrs text-lg"></div>
-        <span>Docs</span>
-      </NuxtLink>
-      <NuxtLink class="btn" to="/examples">
-        <div class="i-carbon-aperture text-lg" />
-        <span>Examples</span>
-      </NuxtLink>
+      <div ref="homeBtn">
+        <NuxtLink class="btn hidden md:flex" @click="setActive('home')" to="/">
+          <div class="i-carbon-home text-lg"></div>
+          <span>Home</span>
+        </NuxtLink>
+      </div>
+
+      <div ref="docsBtn">
+        <NuxtLink
+          class="btn border-rounded"
+          to="/docs"
+          @click="setActive('docs')"
+        >
+          <div class="i-simple-icons-docsdotrs text-lg"></div>
+          <span>Docs</span>
+        </NuxtLink>
+      </div>
+
+      <div ref="examplesBtn">
+        <NuxtLink class="btn" to="/examples" @click="setActive('examples')">
+          <div class="i-carbon-aperture text-lg" />
+          <span>Examples</span>
+        </NuxtLink>
+      </div>
     </div>
     <div flex="~" space="x4">
       <NuxtLink to="https://github.com/Nico-Mayer/p5vue" target="_blank">
@@ -45,8 +86,13 @@
 </template>
 
 <style scoped>
-.router-link-active {
+/* .router-link-active {
   border: 1px solid #41b883 !important;
   pointer-events: none !important;
+} */
+
+.isActive {
+  border: 1px solid #41b883;
+  border-radius: 0.25rem;
 }
 </style>

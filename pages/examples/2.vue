@@ -1,10 +1,22 @@
 <script setup lang="ts">
 import p5 from "p5"
-let darkMode
+
+let bgColor
 let width = 850
 let height = 400
+const emit = defineEmits(["forceUpdate"])
+
+function changeTheme() {
+  toggleDarkMode()
+  if (bgColor === "#22272E") {
+    bgColor = "#ffffff"
+  } else {
+    bgColor = "#22272E"
+  }
+}
 
 onMounted(() => {
+  emit("forceUpdate")
   if (
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -14,9 +26,9 @@ onMounted(() => {
   }
 
   if (isDark()) {
-    darkMode = true
+    bgColor = "#22272E"
   } else {
-    darkMode = false
+    bgColor = "#ffffff"
   }
 })
 
@@ -27,7 +39,7 @@ const sketch = (p5: p5) => {
   }
   p5.draw = () => {
     //p5.clear(0, 0, 0, 0)
-    p5.background(250)
+    p5.background(bgColor)
     p5.rotateY(p5.frameCount * 0.01)
 
     for (let j = 0; j < 5; j++) {
@@ -52,7 +64,8 @@ const sketch = (p5: p5) => {
 
 <template>
   <main>
-    <button class="themeToggle-btn" @click="toggleDarkMode()">
+    <Sidebar title="Examples" />
+    <button class="themeToggle-btn" @click="changeTheme">
       <div class="i-carbon-moon dark:i-carbon-sun icon-btn" />
     </button>
     <div m="b4" relative="~">
@@ -65,7 +78,7 @@ const sketch = (p5: p5) => {
         Adapted from the Official
         <a
           href="https://p5js.org/examples/3d-sine-cosine-in-3d.html"
-          class="text-accent/50 hover:text-accent"
+          class="text-accent/90 hover:text-accent underline"
           >p5 examples</a
         >.
       </p>
