@@ -19,8 +19,8 @@ const docsMenuItems = [
 ]
 const examplesMenuItems = [
   {
-    title: "Example1",
-    icon: "i-carbon-3d-mpr-toggle",
+    title: "Follow",
+    icon: "i-carbon-flow-data",
     url: "/examples/",
   },
   {
@@ -29,8 +29,8 @@ const examplesMenuItems = [
     url: "/examples/2",
   },
   {
-    title: "Example 3",
-    icon: "i-carbon-assembly-reference",
+    title: "Mouse 2D",
+    icon: "i-carbon-tropical-storm",
     url: "/examples/3",
   },
 ]

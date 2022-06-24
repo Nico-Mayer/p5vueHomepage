@@ -2,15 +2,15 @@
 const homeBtn = ref<HTMLElement | null>(null)
 const docsBtn = ref<HTMLElement | null>(null)
 const examplesBtn = ref<HTMLElement | null>(null)
+const path = useRoute()
 
 onMounted(() => {
-  homeBtn.value.classList.add("isActive")
+  setActive(path.name)
 })
 
 function setActive(dir) {
-  console.log(dir)
   switch (dir) {
-    case "home":
+    default:
       homeBtn.value.classList.add("isActive")
       docsBtn.value.classList.remove("isActive")
       examplesBtn.value.classList.remove("isActive")

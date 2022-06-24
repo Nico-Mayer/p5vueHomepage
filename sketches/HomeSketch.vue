@@ -12,15 +12,13 @@ let r1 = 190
 let r2 = 220
 
 onMounted(() => {
-  console.log(screen.width)
-
   if (
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     )
   ) {
     // true for mobile device
-    console.log("on mobile")
+
     canvasWidth = screen.width
     canvasHeight = screen.height
   }
@@ -45,7 +43,6 @@ function changeTheme() {
   }
 }
 function changeGravity(e) {
-  console.log(g)
   g = e.target.value
 }
 function changeMass(e) {
@@ -137,7 +134,7 @@ const sketch = (p5: p5) => {
 
     p5.mousePressed = () => {
       let d = p5.dist(xOff, yOff, p5.mouseX, p5.mouseY)
-      console.log(p5.mouseY)
+
       if (d < r1 + r2 && p5.mouseY > 0) {
         a1 = p5.random(200)
         a2 = p5.random(200)
