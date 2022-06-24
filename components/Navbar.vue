@@ -5,7 +5,13 @@ const examplesBtn = ref<HTMLElement | null>(null)
 const path = useRoute()
 
 onMounted(() => {
-  setActive(path.name)
+  let pathDir = ""
+  if (path.fullPath.includes("docs")) {
+    pathDir = "docs"
+  } else if (path.fullPath.includes("examples")) {
+    pathDir = "examples"
+  }
+  setActive(pathDir)
 })
 
 function setActive(dir) {
