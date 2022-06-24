@@ -77,7 +77,7 @@ function setActive(dir) {
         </NuxtLink>
       </div>
     </div>
-    <div flex="~" space="x4">
+    <div flex="~">
       <NuxtLink to="https://github.com/Nico-Mayer/p5vue" target="_blank">
         <div class="i-mdi-github icon-btn"></div>
       </NuxtLink>
@@ -86,13 +86,8 @@ function setActive(dir) {
 </template>
 
 <style scoped>
-/* .router-link-active {
-  border: 1px solid #41b883 !important;
-  pointer-events: none !important;
-} */
-
 .isActive {
-  border: 1px solid #41b883;
   border-radius: 0.25rem;
+  outline: 1px solid #41b883;
 }
 </style>

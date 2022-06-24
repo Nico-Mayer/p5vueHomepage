@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import p5 from "p5"
 
-let bgColor
 let width = 850
 let height = 400
 
 function changeTheme() {
   toggleDarkMode()
-  if (bgColor === "#22272E") {
-    bgColor = "#ffffff"
-  } else {
-    bgColor = "#22272E"
-  }
 }
 
 onMounted(() => {
@@ -21,12 +15,6 @@ onMounted(() => {
     )
   ) {
     width = screen.width * 0.9
-  }
-
-  if (isDark()) {
-    bgColor = "#22272E"
-  } else {
-    bgColor = "#ffffff"
   }
 })
 
@@ -51,12 +39,15 @@ const sketch = (p5: p5) => {
 
 <template>
   <main>
-    <div flex="~" p="t20">
+    <div flex="~ col md:row" p="t20">
       <Sidebar title="Examples" />
-      <button class="themeToggle-btn" @click="changeTheme">
+      <button
+        class="absolute top-80 right-4 z-10 md:themeToggle-btn"
+        @click="changeTheme"
+      >
         <div class="i-carbon-moon dark:i-carbon-sun icon-btn m0" />
       </button>
-      <div p="10">
+      <div p="2 md:10">
         <div m="b4" relative="~">
           <div flex="~" space="x4" items="center" m="b-2">
             <div class="i-carbon-tropical-storm" text="2xl" />
@@ -73,7 +64,13 @@ const sketch = (p5: p5) => {
           </p>
         </div>
 
-        <div border="~ 2 accent" rounded="~ lg" overflow="hidden">
+        <div
+          flex="~ col"
+          items="center"
+          border="~ 2 accent"
+          rounded="~ lg"
+          overflow="hidden"
+        >
           <P5Wrapper :sketch="sketch" />
         </div>
         <h1 class="font-bold text-accent text-2xl my-8">Code</h1>
